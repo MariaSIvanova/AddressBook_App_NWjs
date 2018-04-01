@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<form id="add" name="listUsers" onsubmit="javascript:alert('I do also submit');" action="script.js" method="GET">
+<fieldset>
+<legend>Поиск по справочнику</legend>
+<table class="tb" align="left" border="0">
+<tbody>
+<tr>
+<th>ФИО</th>
+<th>Телефон</th>
+<th>Адрес</th>
+</tr>
+
+<tr class="background">
+<td>
+<input name="name" type="text" placeholder="ФИО абонента"/>
+</td>
+<td><input name="telephone" type="text" placeholder="+7 926 1234567"/></td>
+<td><input name="address" type="text" placeholder="ул.Кравченко"/></td>
+<td rowspan="2"><input type="submit" id="sendButton" value="Найти"/></td>
+<td rowspan="2"><input type="submit" value="Добавить"/></td>
+</tr>
+
+</tbody>
+</table>
+</fieldset>
+<fieldset>
+<legend>Результат поиска</legend>
+</fieldset>
+</form>
+<script>
+        // Получение одного пользователя
+        function GetUser(name) {
+            $.ajax({
+                url: "/api/users/"+name,
+                type: "GET",
+                contentType: "application/json",
+                success: function (addressbook) {
+                    var form = document.forms["addressbook"];
+                    form.elements["name"].value = addressbook.name;
+                    form.elements["telephone"].value = addressbook.telephone;
+                    form.elements["address"].value = addressbook.address;
+                }
+            });
+        }
+		
+$(".add").click(function(){
+  $("#sendButton").click();
+});
+</script>
+</body>
+</html>
